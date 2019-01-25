@@ -2,4 +2,4 @@
 docker pull microsoft/bcsandbox 
 #clear
 # Business central Container starten
-#docker run -e accept_eula=Y -m 4G microsoft/bcsandbox
+docker run -e accept_eula=Y -m 4G microsoft/bcsandbox:de

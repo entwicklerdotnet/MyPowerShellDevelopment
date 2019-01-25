@@ -1,0 +1,3 @@
+﻿sc delete MicrosoftDynamicsNavServer$bcom-psys365
+sc delete MicrosoftDynamicsNavServer$BCOMaro
+sc delete MicrosoftDynamicsNavServer$BC365

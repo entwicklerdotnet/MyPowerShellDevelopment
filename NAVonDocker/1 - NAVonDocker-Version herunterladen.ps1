@@ -6,8 +6,8 @@ Get-ExecutionPolicy -List
 Import-Module navcontainerhelper
 # Variable welches Imgae gezogen wird
 # NAV2018 aktuellstes CU
-$imageNameTag = "microsoft/dynamics-nav"
+#$imageNameTag = "microsoft/dynamics-nav"
 # Business Central aktuellstes CU
-#"$imageNameTag =microsoft/bcsandbox"
+"$imageNameTag =microsoft/bcsandbox:de"
 #lädt as angegebene Image herunter
 docker pull $imageNameTag

@@ -4,7 +4,7 @@ Import-Module -Name "C:\Program Files\Microsoft Dynamics 365 Business Central\13
 
 #```  RootSite
 #New-NAVWebServerInstance -WebServerInstance BC365 -Server BC365 -ServerInstance BC365 -SiteDeploymentType RootSite -WebSitePort 8081 -PublishFolder "C:\install_aro\Dynamics\Dynamics365BusinessCentral DE\WebClient\Microsoft Dynamics NAV\130\Web Client\WebPublish"
-New-NAVWebServerInstance -WebServerInstance 'BCOMaro'  -Server localhost  -ServerInstance 'BCOMaro' -ClientServicesPort '64046' -SiteDeploymentType RootSite -WebSitePort 8082  -PublishFolder "C:\install_aro\Dynamics\Dynamics365BusinessCentral DE\WebClient\Microsoft Dynamics NAV\130\Web Client\WebPublish"
+New-NAVWebServerInstance -WebServerInstance 'BCOM-PSYS365Web'  -Server localhost  -ServerInstance 'BCOM-PSYS365' -ClientServicesPort '36546' -SiteDeploymentType RootSite -WebSitePort 36580  -PublishFolder "C:\install\Dynamics365BusinessCentral DE\WebClient\Microsoft Dynamics NAV\130\Web Client\WebPublish"
 #```Subsite
 #New-NAVWebServerInstance -WebServerInstance BC365 -Server localhost -ServerInstance bc365 -SiteDeploymentType SubSite -ContainerSiteName 'Microsoft Dynamics 365 Business Central Web Client' -WebSitePort 8081 -PublishFolder "C:\inetpub\wwwroot\Microsoft Dynamics 365 Business Central Web Client\"
 
