@@ -24,3 +24,6 @@ Get-NAVServerInstance | foreach {
     }
 
 }
+
+#Start NAV Server Instances
+Get-NAVServerInstance | Set-NAVServerInstance -Start

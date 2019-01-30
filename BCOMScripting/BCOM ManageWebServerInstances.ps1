@@ -28,3 +28,6 @@ New-NAVWebServerInstance -WebServerInstance BC365-005Web  -Server b001cvs000931 
 
 # Bei Bedarf Port anpassen, WebClient weglassen
 #http://localhost:8081/BC365/WebClient
+
+
+Remove-NAVWebServerInstance -WebServerInstance BC365
