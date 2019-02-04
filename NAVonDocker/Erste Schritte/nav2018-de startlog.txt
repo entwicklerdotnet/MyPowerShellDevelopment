@@ -1,0 +1,38 @@
+docker run -m 3G -e ACCEPT_EULA=Y microsoft/dynamics-nav:2018-de
+
+
+
+
+PS C:\Windows\system32> docker run -m 3G -e ACCEPT_EULA=Y microsoft/dynamics-nav:2018-de
+Initializing...
+Starting Container
+Hostname is 7c477a041a9a
+PublicDnsName is 7c477a041a9a
+Using NavUserPassword Authentication
+Starting Local SQL Server
+Starting Internet Information Server
+Creating Self Signed Certificate
+Self Signed Certificate Thumbprint D030483304162AFD8F621D0CAAE45A7E6409272F
+Modifying NAV Service Tier Config File with Instance Specific Settings
+Starting NAV Service Tier
+Creating DotNetCore NAV Web Server Instance
+Creating http download site
+Creating Windows user admin
+Setting SA Password and enabling SA
+Creating admin as SQL User and add to sysadmin
+Creating NAV user
+Container IP Address: 172.27.62.117
+Container Hostname  : 7c477a041a9a
+Container Dns Name  : 7c477a041a9a
+Web Client          : https://7c477a041a9a/NAV/
+NAV Admin Username  : admin
+NAV Admin Password  : Wevu6568
+Dev. Server         : https://7c477a041a9a
+Dev. ServerInstance : NAV
+
+Files:
+http://7c477a041a9a:8080/al-0.12.17720.vsix
+http://7c477a041a9a:8080/certificate.cer
+
+Initialization took 162 seconds
+Ready for connections!
