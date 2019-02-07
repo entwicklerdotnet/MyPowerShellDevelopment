@@ -29,4 +29,4 @@ docker version
 docker pull microsoft/nanoserver
 
 # prüfen nach Abschluss des Vorgangs, dass die herunter­geladenen Basis-Images auf dem System vorhanden sind
-docker images 
+docker images

@@ -20,6 +20,7 @@ function Download {
 #-----------------------------------------------------------------------------------
 [Environment]::SetEnvironmentVariable("HTTP_PROXY", "http://proxy.bechtle.de:80", [EnvironmentVariableTarget]::Machine)
 
+
 #$Installer = Download "https://download.docker.com/win/static/stable/x86_64/docker-17.09.0-ce.zip" "$Env:Temp\InstallDocker.msi"
 
 $DockerInstaller = "N:\CIO-Orga\ASM-BA\Navision\Entwicklung\Installation Docker\Docker for Windows Installer.exe" 
@@ -27,7 +28,7 @@ Copy-Item   $DockerInstaller "$Env:Temp\"
 $Installer = "$Env:Temp\Docker for Windows Installer.exe"
 
 $Docker = Download "https://aka.ms/tp5/b/dockerd.exe" "$Env:ProgramFiles\docker\dockerd.exe"
-
+$Env:ProgramFiles\docker\dockerd.exe
 
 ## Now install it
 #msiexec -i $Installer #-quiet
@@ -38,6 +39,7 @@ Start-Process "C:\Program Files\docker\Docker\Docker for Windows.exe"
 & $Env:ProgramFiles\Docker\Docker\DockerCli.exe -SwitchDaemon .
 
 #&$Docker -H npipe:////./pipe/win_engine --service-name=com.docker.windows --register-service
+
 
 # Ensure the feature is enabled (this was taken care of by the Docker Installer, but for completeness sake) ... 
 Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V, Containers -All
