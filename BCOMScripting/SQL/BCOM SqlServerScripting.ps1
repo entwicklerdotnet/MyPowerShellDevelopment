@@ -48,7 +48,7 @@ foreach ($db in (Get-ChildItem))
       Write-Error  $dbname + "wurde nicht gesichert, bitte prüfen."
    }
 }
-
+Install-NAV -DVDFolder 
 <#
 help sqlserver
 

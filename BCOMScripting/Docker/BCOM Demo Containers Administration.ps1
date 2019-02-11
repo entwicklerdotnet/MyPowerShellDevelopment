@@ -1,5 +1,5 @@
 clear
-
+<#>
 start 'http://bcdevserver/nav'
 start 'http://bctestserver/nav'
 
@@ -14,6 +14,7 @@ cd C:\DockerFiles\BCDEVServer
 Get-NavContainerSharedFolders BCDEVServer | Format-List
 
 Get-ChildItem -Path "C:\DockerFiles\BCDEVServer" -Directory | Remove-Item
+#>
 
 
 docker run  --name bcwinserver -h bcwinserver -m 3G -e useSSL=N  -v "C:\DockerFiles\BCWINServer:c:\run\mywinserver"   mcr.microsoft.com/windows/servercore
