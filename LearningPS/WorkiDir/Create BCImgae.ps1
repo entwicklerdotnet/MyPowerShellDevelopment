@@ -1,12 +1,7 @@
 clear
-docker images
-docker ps -a
-docker rm myserver
-
-docker logs 
 
 #--------------------------------------------------------------
-# Prepare Instalaltionfiles
+# Prepare Installationfiles
 #--------------------------------------------------------------
 clear
 
@@ -29,11 +24,21 @@ dir
 
 
 #docker run --name  myserver -it -v "C:\DockerFiles:c:\HostFiles"  mcr.microsoft.com/windows/servercore powershell
+Clear-Host
+
 docker run --name  myserver -it -v "C:\DockerFiles:c:\HostFiles"  mcr.microsoft.com/windows/servercore
+docker run --name  myserver -it -v "C:\DockerFiles:c:\HostFiles"  mcr.microsoft.com/windows/nanoserver
 docker start myserver
-Copy-Item -Path C:\GIT\PowerShellScripts\BCOMScripting\BCNAV\InstallBCOnPremImageFromDVD.ps1 -Destination C:\DockerFiles\InstallBCOnPremImageFromDVD.ps1 -force
-docker start myserver
-docker exec -it myserver powershell 
+Copy-Item -Path C:\GIT\PowerShellScripts\BCOMScripting\BCDevImage\"BCOM ImportModules.ps1" -Destination C:\DockerFiles\bcdevimage -force
+Copy-Item -Path C:\GIT\PowerShellScripts\BCOMScripting\BCDevImage\"InstallBCOnPremImageFromDVD.ps1" -Destination C:\DockerFiles\bcdevimage -force
+Copy-Item -Path C:\GIT\PowerShellScripts\BCOMScripting\BCDevImage\"BCOMStart.ps1" -Destination C:\DockerFiles\bcdevimage -force
+
+#docker exec -it -w "c:\hostfiles"myserver cmd  
+
+docker exec -it  -w "c:\hostfiles\BCDevImage" myserver powershell 
+#docker exec -it  -w "c:\hostfiles" myserver powershell; BCOMStart.ps1
+docker exec -it  -w "c:\hostfiles\BCDevImage" myserver powershell BCOMStart.ps1
+#docker exec myserver cmd exit
 #docker exec -it myserver powershell  .\InstallBCOnPremImageFromDVD.ps1
 #dir c:\dockerfiles
 #dir c:\hostfiles

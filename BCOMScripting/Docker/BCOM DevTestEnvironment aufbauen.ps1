@@ -73,6 +73,7 @@ get-Service com.docker.service
 #-----------------------------------------------------------------------------------
 #images laden
 #-----------------------------------------------------------------------------------
+docker pull mcr.microsoft.com/windows/nanoserver
 # WindowsCore
 docker pull mcr.microsoft.com/windows/servercore
 # IIS
