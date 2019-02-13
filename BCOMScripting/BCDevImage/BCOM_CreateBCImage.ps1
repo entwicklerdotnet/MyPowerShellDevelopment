@@ -19,7 +19,7 @@ Copy-Item -Path (Join-Path $PathScripting "BCOM_InstallBCOnPremFromDVD.ps1") -De
 
 docker stop $hostname
 docker rm $hostname
-#docker run --name $hostname  -it -w ($PathImage) -v ($PathShare)  mcr.microsoft.com/windows/nanoserver
+docker run --name $hostname  -it -w ($PathImage) -v ($PathShare)  mcr.microsoft.com/windows/nanoserver
 docker run --name $hostname  -it -w ($PathImage) -v ($PathShare)  mcr.microsoft.com/windows/servercore
 docker start $hostname
 docker exec -it $hostname cmd [Environment]::SetEnvironmentVariable("HTTP_PROXY", "http://proxy.bechtle.de:80", [EnvironmentVariableTarget]::Machine)
