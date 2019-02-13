@@ -1,4 +1,15 @@
 clear
+
+<#>
+#Docker service verwalten
+services.msc
+Stop-Service *docker* -Force
+get-service *docker*
+Start-Service *docker*
+get-service *docker*
+#>
+
+
 docker images
 
 docker ps -a

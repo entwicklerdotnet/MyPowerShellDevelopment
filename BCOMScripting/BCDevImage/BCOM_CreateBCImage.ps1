@@ -1,28 +1,31 @@
-clear
-
 #--------------------------------------------------------------
-# Prepare Installationfiles
-#--------------------------------------------------------------
-clear
-
-$Licensefile    = '\\bechtle.net\group\CIO-Orga\ASM-BA\Navision\Lizenzierung\Business Central OnPrem\5216086_365BC_Entwickler AG.flf'
-$NAVDVD         = 'c:\DockerFiles\Microsoft Dynamics 365 Business Central'
-$Log            = 'C:\DockerFiles\Log.txt'
-
-# Installationsordner nach lokal Kopieren
-$BCOnPremDirServer    = "\\bechtle.net\group\CIO-Orga\ASM-BA\Navision\Entwicklung\Programme\Microsoft Dynamics 365 Business Central"
-$BCOnPremTempDir    = "C:\DockerFiles"
-$BCOnPremClientZip    = Join-Path $BCOnPremTempDir "Microsoft Dynamics 365 Business Central\Dynamics365BusinessCentral DE.zip"
-$BCOnPremTempDirZip = Join-Path $BCOnPremTempDir "Microsoft Dynamics 365 Business Central"
-
-$ConfigFile     = join-path $BCOnPremTempDir 'Microsoft Dynamics 365 Business Central\BC365DevEnv.xml'
-
-Copy-Item -Path $BCOnPremDirServer -Destination $BCOnPremTempDir -Force -Recurse
-
-dir
+# Create Image base image is nanhoserver
 #--------------------------------------------------------------
 
+Clear-Host
+Copy-Item -Path C:\GIT\PowerShellScripts\BCOMScripting\BCDevImage\"BCOMStart.ps1" -Destination C:\DockerFiles\bcdevimage -force
+Copy-Item -Path C:\GIT\PowerShellScripts\BCOMScripting\BCDevImage\"BCOM ImportModules.ps1" -Destination C:\DockerFiles\bcdevimage -force
+Copy-Item -Path C:\finsql\lizenzen\"5216086_365BC_Entwickler AG.flf" -Destination C:\DockerFiles\bcdevimage -force
+Copy-Item -Path C:\GIT\PowerShellScripts\BCOMScripting\BCDevImage\"InstallBCOnPremImageFromDVD.ps1" -Destination C:\DockerFiles\bcdevimage -force
 
+
+$hostname = "mynanoserver"
+#$hostname = "myserver"
+docker run --name $hostname  -it -w "c:\HostFiles\BCDevImage" -v "C:\DockerFiles:c:\HostFiles"  mcr.microsoft.com/windows/nanoserver
+
+
+docker start $hostname
+docker exec -it $hostname "powershell c:\HostFiles\BCDevImage\BCOMStart.ps1"
+docker exec -it $hostname "powershell 'c:\HostFiles\BCDevImage\BCOM ImportModules.ps1'"
+docker exec -it $hostname "powershell 'c:\HostFiles\BCDevImage\InstallBCOnPremImageFromDVD.ps1'"
+powershell version
+in  
+docker stop $hostname
+docker rm $hostname
+docker ps -a
+
+get-command -Module Containers
+<#>
 #docker run --name  myserver -it -v "C:\DockerFiles:c:\HostFiles"  mcr.microsoft.com/windows/servercore powershell
 Clear-Host
 
