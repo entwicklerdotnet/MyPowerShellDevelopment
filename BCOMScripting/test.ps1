@@ -6,3 +6,5 @@ Get-Command
 Get-Alias
 pwd
 get-help wjb -Examples
+
+docker pull microsoft/dotnet

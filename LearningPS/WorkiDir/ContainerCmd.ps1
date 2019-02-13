@@ -1,6 +1,6 @@
 clear
 
-<#>
+<##>
 #Docker service verwalten
 services.msc
 Stop-Service *docker* -Force

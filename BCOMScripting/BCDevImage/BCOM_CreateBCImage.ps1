@@ -1,30 +1,48 @@
+#Clear-Host
 #--------------------------------------------------------------
-# Create Image base image is nanhoserver
+# Create Image base image is nanoserver
 #--------------------------------------------------------------
+$hostname = "ImageServer"
+$devimage ='BCDevImage'
+$PathScripting = Join-Path 'C:\GIT\PowerShellScripts\BCOMScripting' $devimage
+$PathDestination = Join-Path $DockerVol $devimage 
+$PathShare = $DockerVol +":" + $HostVol
 
-Clear-Host
-Copy-Item -Path C:\GIT\PowerShellScripts\BCOMScripting\BCDevImage\"BCOMStart.ps1" -Destination C:\DockerFiles\bcdevimage -force
-Copy-Item -Path C:\GIT\PowerShellScripts\BCOMScripting\BCDevImage\"BCOM ImportModules.ps1" -Destination C:\DockerFiles\bcdevimage -force
-Copy-Item -Path C:\finsql\lizenzen\"5216086_365BC_Entwickler AG.flf" -Destination C:\DockerFiles\bcdevimage -force
-Copy-Item -Path C:\GIT\PowerShellScripts\BCOMScripting\BCDevImage\"InstallBCOnPremImageFromDVD.ps1" -Destination C:\DockerFiles\bcdevimage -force
+$PathImage = Join-Path $HostVol "BCDevImage"
+$PathShare
+New-Item -Path $PathDestination -ItemType Directory -Force
+
+Copy-Item -Path (Join-Path $PathScripting "BCOMStart.ps1") -Destination $PathDestination -force
+Copy-Item -Path (Join-Path $PathScripting "BCOM_ImportModules.ps1") -Destination $PathDestination -force
+#Copy-Item -Path C:\finsql\lizenzen\"5216086_365BC_Entwickler AG.flf" -Destination C:\DockerFiles\bcdevimage -force
+Copy-Item -Path (Join-Path $PathScripting "BCOM_InstallBCOnPremFromDVD.ps1") -Destination $PathDestination -force
+
+docker stop $hostname
+docker rm $hostname
+#docker run --name $hostname  -it -w ($PathImage) -v ($PathShare)  mcr.microsoft.com/windows/nanoserver
+docker run --name $hostname  -it -w ($PathImage) -v ($PathShare)  mcr.microsoft.com/windows/servercore
+docker start $hostname
+docker exec -it $hostname cmd [Environment]::SetEnvironmentVariable("HTTP_PROXY", "http://proxy.bechtle.de:80", [EnvironmentVariableTarget]::Machine)
+docker exec -it $hostname "powershell" 
 
 
-$hostname = "mynanoserver"
-#$hostname = "myserver"
-docker run --name $hostname  -it -w "c:\HostFiles\BCDevImage" -v "C:\DockerFiles:c:\HostFiles"  mcr.microsoft.com/windows/nanoserver
-
-
+<##>
 docker start $hostname
 docker exec -it $hostname "powershell c:\HostFiles\BCDevImage\BCOMStart.ps1"
 docker exec -it $hostname "powershell 'c:\HostFiles\BCDevImage\BCOM ImportModules.ps1'"
 docker exec -it $hostname "powershell 'c:\HostFiles\BCDevImage\InstallBCOnPremImageFromDVD.ps1'"
 powershell version
 in  
+$hostname = 'psnanoserver'
 docker stop $hostname
 docker rm $hostname
 docker ps -a
 
 get-command -Module Containers
+#>
+
+
+
 <#>
 #docker run --name  myserver -it -v "C:\DockerFiles:c:\HostFiles"  mcr.microsoft.com/windows/servercore powershell
 Clear-Host

@@ -5,6 +5,9 @@ Import-Module -Name "C:\Program Files\Microsoft Dynamics 365 Business Central\13
 Import-Module -Name "C:\Program Files\Microsoft Dynamics 365 Business Central\130\Service\Microsoft.Dynamics.Nav.Management.psm1"
 #>
 # Install nuget Provider 
+
+Get-PackageProvider
+Register-PSRepository -Name "PSGallery" –SourceLocation "https://www.powershellgallery.com/api/v2/" -InstallationPolicy Trusted
 Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
 
 Find-Module | where Author -eq waldo | Install-Module
