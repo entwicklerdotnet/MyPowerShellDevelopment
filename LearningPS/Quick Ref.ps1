@@ -20,3 +20,6 @@ scope (instead of its own scope)
 
 
 Write-Host "First`tSecond"
+
+$env:psmodulepath
+Get-ChildItem -Recurse | Where-Object {$_.Name -like "InstallModules*" }

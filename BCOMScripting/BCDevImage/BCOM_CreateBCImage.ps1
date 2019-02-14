@@ -1,7 +1,10 @@
-#Clear-Host
+Clear-Host
 #--------------------------------------------------------------
 # Create Image base image is nanoserver
 #--------------------------------------------------------------
+#& .\BCOMScripting\BCDevImage\BCOm_SetGlobalVar.ps1
+#. .\BCOMScripting\BCDevImage\BCOm_SetGlobalVar.ps1
+. .\BCOm_SetGlobalVar.ps1
 $hostname = "ImageServer"
 $devimage ='BCDevImage'
 $PathScripting = Join-Path 'C:\GIT\PowerShellScripts\BCOMScripting' $devimage
@@ -9,14 +12,33 @@ $PathDestination = Join-Path $DockerVol $devimage
 $PathShare = $DockerVol +":" + $HostVol
 
 $PathImage = Join-Path $HostVol "BCDevImage"
-$PathShare
-New-Item -Path $PathDestination -ItemType Directory -Force
+#$PathShare
+#New-Item -Path $PathDestination -ItemType Directory -Force
 
+<#
 Copy-Item -Path (Join-Path $PathScripting "BCOMStart.ps1") -Destination $PathDestination -force
 Copy-Item -Path (Join-Path $PathScripting "BCOM_ImportModules.ps1") -Destination $PathDestination -force
-#Copy-Item -Path C:\finsql\lizenzen\"5216086_365BC_Entwickler AG.flf" -Destination C:\DockerFiles\bcdevimage -force
 Copy-Item -Path (Join-Path $PathScripting "BCOM_InstallBCOnPremFromDVD.ps1") -Destination $PathDestination -force
+#>
+Copy-Item -Path $PathScripting  -Destination $PathDestination -force
 
+
+<#
+vorhandenen hostz anhalten und entfernen,soll immer neu erzeugt werden
+#>
+
+docker stop $hostname
+docker rm $hostname
+
+<#
+host in der powershell starten
+#>
+docker run --name $hostname  -it -w ($PathImage) -v ($PathShare)  mcr.microsoft.com/windows/servercore "powershell" 
+#manuell??
+#docker exec -it $hostname "powershell" 
+
+#----------------------------------------------------
+<#>
 docker stop $hostname
 docker rm $hostname
 docker run --name $hostname  -it -w ($PathImage) -v ($PathShare)  mcr.microsoft.com/windows/nanoserver
@@ -24,9 +46,9 @@ docker run --name $hostname  -it -w ($PathImage) -v ($PathShare)  mcr.microsoft.
 docker start $hostname
 docker exec -it $hostname cmd [Environment]::SetEnvironmentVariable("HTTP_PROXY", "http://proxy.bechtle.de:80", [EnvironmentVariableTarget]::Machine)
 docker exec -it $hostname "powershell" 
+#>
 
-
-<##>
+<#>
 docker start $hostname
 docker exec -it $hostname "powershell c:\HostFiles\BCDevImage\BCOMStart.ps1"
 docker exec -it $hostname "powershell 'c:\HostFiles\BCDevImage\BCOM ImportModules.ps1'"
