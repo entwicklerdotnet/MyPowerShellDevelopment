@@ -1,29 +1,3 @@
-<#
-Funktion liegt künftig in eigenem Modul IOFunctions
-#>
-Function pause ($message) 
-{ 
-    # Check if running Powershell ISE 
-    if ($psISE) 
-    { 
-     Add-Type -AssemblyName System.Windows.Forms 
-     [System.Windows.Forms.MessageBox]::Show("$message") 
-    } 
-    else 
-    { 
-     Write-Host "$message" -ForegroundColor Yellow 
-     $x = [System.Console]::ReadKey()
-    } 
-} 
-
-
-clear
-Write-Output "Voraussetzungen bitte beachten!!!"
-Write-Output "Cloud.Ready.Software Github(https://github.com/waldo1001/Cloud.Ready.Software.PowerShell) muss lokal in d:\BCOM\Scripting liegen"
-pause "Bitte beachten Sie die Voraussetzungen! Drücken Sie die Eingabetaste für Weiter"
-
-<#### Beginn docker config>
-$DockerPath = "D:\\Docker"
 #-----------------------------------------------------------------------------------
 #optional könne  die Docker dateien auf einem anderen Laufwerk liegen
 #-----------------------------------------------------------------------------------
@@ -32,7 +6,8 @@ $DockerPath = "D:\\Docker"
 #-----------------------------------------------------------------------------------
 #Windows 10:
 #-----------------------------------------------------------------------------------
-New-Item C:\ProgramData\Docker\config\daemon.json -force -value '{"graph": "D:\\Docker"}'
+New-Item "C:\\Docker"
+New-Item C:\ProgramData\Docker\config\daemon.json -force -value '{"graph": "C:\\Docker"}'
 
 #-----------------------------------------------------------------------------------
 # set bechtle proxy environment var
@@ -71,6 +46,16 @@ get-Service com.docker.service
 #docker run -e accept_eula=Y --name test -h test -m 4G -e useSSL=N -e licensefile="D:\FinUpdate\Lizenzen\5216086_365BC_Entwickler AG.flf" -v D:\Transfer\BCOnPrem:D:\run\my --restart always -e exitonerror=N -e locale=de-de mcr.microsoft.com/businesscentral/onprem
 #>
 #-----------------------------------------------------------------------------------
+#images laden
+#-----------------------------------------------------------------------------------
+docker pull mcr.microsoft.com/windows/nanoserver
+# WindowsCore
+docker pull mcr.microsoft.com/windows/servercore
+# IIS
+docker pull mcr.microsoft.com/windows/servercore/iis
+# SQLServer
+docker pull microsoft/mssql-server-windows-developer
+#-----------------------------------------------------------------------------------
 # Business Central On Premise
 docker pull mcr.microsoft.com/businesscentral/onprem:de
 <##>
@@ -86,7 +71,15 @@ Install-Package navcontainerhelper
 #-----------------------------------------------------------------------------------
 #PS-Modul für Navison laden: navcontainerhelper
 #-----------------------------------------------------------------------------------
-Install-Module CRS.RemoteNAVDockerHostHelper -Force
+#Install-Module CRS.RemoteNAVDockerHostHelper -Force
+$url = "https://github.com/waldo1001/Cloud.Ready.Software.PowerShell/archive/master.zip"
+$output = 'C:\DockerShare\BCDevImage\crsmaster.zip'
+$start_time = Get-Date
+
+[Net.ServicePointManager]::SecurityProtocol = "tls12, tls11, tls"
+Invoke-WebRequest -Uri $url -OutFile $output
+Expand-Archive -Path $output -DestinationPath 'C:\DockerShare\BCDevImage'
+
 
 #-----------------------------------------------------------------------------------
 #Entwicklungs- und Testcontainer auf Basis Image mcr.microsoft.com/businesscentral/onprem:DE
@@ -111,7 +104,7 @@ New-CSideDevContainer `
     -memoryLimit 3G `
     -updateHosts `
     -accept_eula `
-    -additionalParameters @("--volume ""D:\DockerShare\BCTestServer:c:\HostFiles""") `
+    -additionalParameters @("--volume ""C:\DockerShare\BCTestServer:c:\HostFiles""") `
     -Verbose 
  
  
