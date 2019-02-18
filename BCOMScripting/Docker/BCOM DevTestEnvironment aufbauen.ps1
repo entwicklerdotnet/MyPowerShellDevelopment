@@ -62,6 +62,11 @@ get-Service com.docker.service
 ####Ende Docker config
 #>
 
+#-----------------------------------------------------------------------------------
+# set bechtle proxy environment var
+#-----------------------------------------------------------------------------------
+[Environment]::SetEnvironmentVariable("HTTP_PROXY", "http://proxy.bechtle.de:80", [EnvironmentVariableTarget]::Machine)
+
 
 #Source: 
 #http://www.waldo.be/2017/11/03/dockerwaldo-my-local-demo-environment/

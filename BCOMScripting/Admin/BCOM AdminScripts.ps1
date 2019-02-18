@@ -32,3 +32,17 @@ Sync-NAVTenant -ServerInstance BCOMaro
 
 
 Sync-NAVApp -ServerInstance BCOMaro -Name "BCOMaro"
+
+
+<#
+Netzwerkeinstellungen sichern
+#>
+Netsh -c interface dump > C:\bak\networkinterfaces.bak
+
+<#
+Netzwerkeinstellungen wieder einspielen
+#>
+
+Netsh -f C:\bak\networkinterfaces.bak
+
+Get-NetAdapter
