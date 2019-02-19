@@ -1,8 +1,6 @@
 #-----------------------------------------------------------------------------------
 #optional könne  die Docker dateien auf einem anderen Laufwerk liegen
 #-----------------------------------------------------------------------------------
-# Windows Server: New-Item C:\ProgramData\Docker\config\daemon.json -force -value '{"data-root": "MeinLaufwerk":\\MeinVerzeichnis"}'
-
 #-----------------------------------------------------------------------------------
 #Windows 10:
 #-----------------------------------------------------------------------------------
@@ -13,20 +11,10 @@ New-Item C:\ProgramData\Docker\config\daemon.json -force -value '{"graph": "C:\\
 # set bechtle proxy environment var
 #-----------------------------------------------------------------------------------
 [Environment]::SetEnvironmentVariable("HTTP_PROXY", "http://proxy.bechtle.de:80", [EnvironmentVariableTarget]::Machine)
+
 #-----------------------------------------------------------------------------------
-#Restart Docker
+# manueller Restart Docker
 #-----------------------------------------------------------------------------------
-<#>
-#-----------------------------------------------------------------------------------
-#Docker EE auf Windows Server 2016
-<#
-services.msc
-docker version
-Stop-Service Docker -Force
-Start-Service Docker
-Get-Service Docker
-docker version
-#>
 #-----------------------------------------------------------------------------------
 # Docker for Windows Desktop
 <#
@@ -34,7 +22,6 @@ Stop-Service com.docker.service -Force
 Start-Service Docker
 Start-Service com.docker.service
 get-Service com.docker.service
-####Ende Docker config
 #>
 
 
@@ -106,8 +93,8 @@ New-CSideDevContainer `
     -accept_eula `
     -additionalParameters @("--volume ""C:\DockerShare\BCTestServer:c:\HostFiles""") `
     -Verbose 
- 
- 
+        
+        
 <# Moved to BCOM Demo Containers Administration.ps1>
 start 'http://bcdevserver/nav'
 start 'http://bctestserver/nav'
